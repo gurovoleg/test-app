@@ -1,0 +1,15 @@
+.table-row {
+	cursor: pointer;
+}
+.table-row:hover {
+	background: rgba(0,0,0, 0.03);
+}
+
+.table-expanded-row {
+	background: rgba(0,0,0, 0.03);
+	display: none;
+}
+
+.table-expanded-row--visible {
+	display: table-row;
+}
