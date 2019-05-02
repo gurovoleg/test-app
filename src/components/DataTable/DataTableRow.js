@@ -1,16 +1,33 @@
 import React from 'react';
 import { Table, Checkbox } from "semantic-ui-react";
-import { connect } from "react-redux";
 import "./dataTable.css";
-import * as actions from "../../actions";
 import DataTableExpandableRow from "./DataTableExpandableRow";
 
 class DataTableRow extends React.Component {
 	state = { visible: false };
 
+	componentDidMount() {
+		const key = `TableCommentID_${this.props.data.id}`;
+		let storageValue = localStorage.getItem(key);
+		storageValue = storageValue ===  "true";
+		if (storageValue) {
+			this.setState({ visible: storageValue });
+		} else {
+			localStorage.setItem(key, this.state.visible);
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.visible !== this.state.visible) {
+			const key = `TableCommentID_${this.props.data.id}`;
+			localStorage.setItem(key, this.state.visible);
+		}
+	}
+
 	render() {
-		const { visible } = this.state;
 		const { data } = this.props;
+		const { visible } = this.state;
+
 		return (
 			<React.Fragment>
 				<Table.Row
