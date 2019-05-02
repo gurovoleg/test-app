@@ -9,29 +9,28 @@ class DataTableRow extends React.Component {
 	state = { visible: false };
 
 	render() {
-		const { data, idx, toggleVisible } = this.props;
+		const { visible } = this.state;
+		const { data } = this.props;
 		return (
 			<React.Fragment>
 				<Table.Row
 					className="table-row"
-					onClick={() => toggleVisible(idx)}>
+					onClick={() => this.setState(state => ({ visible: !state.visible }))}>
 					<Table.Cell>{data.id}</Table.Cell>
 					<Table.Cell>{data.name}</Table.Cell>
 					<Table.Cell>{data.email}</Table.Cell>
 					<Table.Cell>{data.body}</Table.Cell>
 					<Table.Cell>{data.postId}</Table.Cell>
 					<Table.Cell collapsing>
-						<Checkbox toggle checked={data.visible}/>
+						<Checkbox toggle checked={visible}/>
 					</Table.Cell>
 				</Table.Row>
 
-				<DataTableExpandableRow visible={data.visible}/>
+				<DataTableExpandableRow visible={visible}/>
 
 			</React.Fragment>
 		);
 	}
 }
 
-export default connect(null, actions)(DataTableRow);
-
-// {/*<Table.Cell colSpan={5}>{mockData.text}</Table.Cell>*/}
+export default DataTableRow;

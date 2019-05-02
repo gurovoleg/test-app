@@ -37,22 +37,20 @@ class CommentsList extends React.Component {
 		}
 
 		return (
-			<div>
-				<Table celled>
-					<DataTableHeader columns={columns} />
-					<DataTableBody data={commentsOnPage} />
-					<Table.Footer>
-						<Table.Row>
-							<Table.HeaderCell colSpan={columns.length}>
-								<Pagination
-									totalPages={totalPages}
-									activePage={page + 1}
-									onPageChange={this.onPageChange}/>
-							</Table.HeaderCell>
-						</Table.Row>
-					</Table.Footer>
-				</Table>
-			</div>
+			<Table celled>
+				<DataTableHeader columns={columns} />
+				<DataTableBody data={commentsOnPage} />
+				<Table.Footer>
+					<Table.Row>
+						<Table.HeaderCell colSpan={columns.length}>
+							<Pagination
+								totalPages={totalPages}
+								activePage={page + 1}
+								onPageChange={this.onPageChange}/>
+						</Table.HeaderCell>
+					</Table.Row>
+				</Table.Footer>
+			</Table>
 		);
 	}
 }

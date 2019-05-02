@@ -42,11 +42,6 @@ const commentsList = (state = initialState, action) => {
 				page: action.payload - 1,
 				commentsOnPage: getPageData(allComments, action.payload - 1, recordsLimit)
 			};
-		case "TOGGLE_EXPANDED_ROW_VISIBLE":
-			return {
-				...state,
-				commentsOnPage: updateComments(state.commentsOnPage, action.payload),
-			};
 		default:
 			return state;
 	}
@@ -57,13 +52,5 @@ const getPageData = (data, page, recordsLimit) => {
 	return data.slice(page*recordsLimit, (page + 1)*recordsLimit)
 };
 
-//Обновляем данные с учетом отображения дополнительного ряда
-const updateComments = (data, idx) => {
-	const updatedItem = {
-		...data[idx],
-		visible: !data[idx].visible
-	};
-	return [...data.slice(0, idx), updatedItem ,...data.slice(idx + 1)]
-};
 
 export default commentsList;

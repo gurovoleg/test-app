@@ -12,8 +12,6 @@ function* fetchComments() {
 		yield put(commentsError(errorMessage)); //TODO - inform about error
 	} else {
 		const comments = yield res.json();
-		// добавляем свойство для отображения доплнительного ряда
-		comments.forEach(item => item.expandedRowVisible = false);
 		yield put(commentsLoaded(comments));
 	}
 }
