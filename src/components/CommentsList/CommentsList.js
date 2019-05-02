@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { commentsRequested, changePage } from "../../actions";
 import Spinner from "../Spinner/Spinner";
 
-const columns = ["Id", "Name", "Email", "Comment", "PostId"];
+const columns = ["Id", "Name", "Email", "Comment", "PostId", ""];
 
 class CommentsList extends React.Component {
 
