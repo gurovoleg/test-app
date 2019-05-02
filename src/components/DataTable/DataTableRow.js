@@ -5,22 +5,21 @@ import DataTableExpandableRow from "./DataTableExpandableRow";
 
 class DataTableRow extends React.Component {
 	state = { visible: false };
+	key = `TableCommentID_${this.props.data.id}`;
 
 	componentDidMount() {
-		const key = `TableCommentID_${this.props.data.id}`;
-		let storageValue = localStorage.getItem(key);
+		let storageValue = localStorage.getItem(this.key);
 		storageValue = storageValue ===  "true";
 		if (storageValue) {
 			this.setState({ visible: storageValue });
 		} else {
-			localStorage.setItem(key, this.state.visible);
+			localStorage.setItem(this.key, this.state.visible);
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.visible !== this.state.visible) {
-			const key = `TableCommentID_${this.props.data.id}`;
-			localStorage.setItem(key, this.state.visible);
+			localStorage.setItem(this.key, this.state.visible);
 		}
 	}
 
