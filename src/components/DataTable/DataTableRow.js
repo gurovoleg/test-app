@@ -2,24 +2,31 @@ import React from 'react';
 import { Table, Checkbox } from "semantic-ui-react";
 import "./dataTable.css";
 import DataTableExpandableRow from "./DataTableExpandableRow";
+import WithStorage from "../hoc/WithStorage";
+
 
 class DataTableRow extends React.Component {
 	state = { visible: false };
-	key = `TableCommentID_${this.props.data.id}`;
+	key = `Table-comments`;
 
 	componentDidMount() {
-		let storageValue = localStorage.getItem(this.key);
-		storageValue = storageValue ===  "true";
-		if (storageValue) {
-			this.setState({ visible: storageValue });
-		} else {
-			localStorage.setItem(this.key, this.state.visible);
+		const { id } = this.props.data;
+		const storage = this.props.storage.getItem(this.key);
+		if (storage && storage[id]) {
+			this.setState({ visible: storage[id] });
 		}
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.visible !== this.state.visible) {
-			localStorage.setItem(this.key, this.state.visible);
+			const  { data: { id }, storage } = this.props;
+			const storageData = storage.getItem(this.key) || {};
+			if (this.state.visible) {
+				storageData[id] = this.state.visible;
+			} else {
+				delete storageData[id];
+			}
+			storage.setItem(this.key, storageData);
 		}
 	}
 
@@ -49,4 +56,4 @@ class DataTableRow extends React.Component {
 	}
 }
 
-export default DataTableRow;
+export default WithStorage(DataTableRow);
