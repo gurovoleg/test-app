@@ -1,0 +1,11 @@
+.bg-color {
+	background: #0a4d86;
+}
+
+.text-block {
+	font-size: 30px;
+	line-height: 35px;
+	border: 1px solid;
+	padding: 40px;
+	overflow: hidden;
+}

@@ -1,15 +1,18 @@
 import React from "react";
 
 const storage = {
-	getItem(storageName) {
-		const ls = localStorage.getItem(storageName);
+	getItem(name) {
+		const ls = localStorage.getItem(name);
 		if (ls) {
 			return JSON.parse(ls);
 		}
 	},
-	setItem(storageName, value) {
-		localStorage.setItem(storageName, JSON.stringify(value));
-	}
+	setItem(name, value) {
+		localStorage.setItem(name, JSON.stringify(value));
+	},
+	removeItem(name) {
+		localStorage.removeItem(name);
+	},
 };
 
 const WithStorage = (Wrapped) => (props) => {

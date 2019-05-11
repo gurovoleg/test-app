@@ -5,6 +5,8 @@ import DataTableBody from "../DataTable/DataTableBody";
 import { connect } from "react-redux";
 import { commentsRequested, changePage } from "../../actions";
 import Spinner from "../Spinner/Spinner";
+import { withRouter } from "react-router-dom";
+import CurrentUser from "../CurrentUser/CurrentUser";
 
 const columns = ["Id", "Name", "Email", "Comment", "PostId", ""];
 
@@ -15,7 +17,7 @@ class CommentsList extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if ( prevProps.match.params.page !== this.props.match.params.page) {
+		if ( prevProps.newPage !== this.props.newPage) {
 			this.props.changePage();
 		}
 	}
@@ -37,20 +39,26 @@ class CommentsList extends React.Component {
 		}
 
 		return (
-			<Table celled>
-				<DataTableHeader columns={columns} />
-				<DataTableBody data={commentsOnPage} />
-				<Table.Footer>
-					<Table.Row>
-						<Table.HeaderCell colSpan={columns.length}>
-							<Pagination
-								totalPages={totalPages}
-								activePage={page + 1}
-								onPageChange={this.onPageChange}/>
-						</Table.HeaderCell>
-					</Table.Row>
-				</Table.Footer>
-			</Table>
+			<CurrentUser>
+				{() => {
+					return (
+						<Table celled id="tableId">
+							<DataTableHeader columns={columns} />
+							<DataTableBody data={commentsOnPage} />
+							<Table.Footer>
+								<Table.Row>
+									<Table.HeaderCell colSpan={columns.length}>
+										<Pagination
+											totalPages={totalPages}
+											activePage={page + 1}
+											onPageChange={this.onPageChange}/>
+									</Table.HeaderCell>
+								</Table.Row>
+							</Table.Footer>
+						</Table>
+					)
+				}}
+			</CurrentUser>
 		);
 	}
 }
@@ -64,14 +72,14 @@ const mapStateToProps = ({ commentsList: { commentsOnPage, page, totalPages, rec
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	const { match: { params: { page }} } = ownProps;
+	const { newPage } = ownProps;
 	return {
-		fetchComments: () => dispatch(commentsRequested(page)),
-		changePage: () => dispatch(changePage(page))
+		fetchComments: () => dispatch(commentsRequested(newPage)),
+		changePage: () => dispatch(changePage(newPage))
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentsList));
 
 
 // OLD VERSION with service without saga

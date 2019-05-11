@@ -47,7 +47,7 @@ const commentsList = (state = initialState, action) => {
 	}
 };
 
-//Выюорка данных для определенной страницы из общего массива
+//Выборка данных для определенной страницы из общего массива
 const getPageData = (data, page, recordsLimit) => {
 	return data.slice(page*recordsLimit, (page + 1)*recordsLimit)
 };
