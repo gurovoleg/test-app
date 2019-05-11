@@ -52,13 +52,13 @@ const LoginFormComponent = (props) => {
 const LoginForm = withFormik({
 	mapPropsToValues(props) {
 		return {
-			email: props.email || "",
-			password: props.password || "",
+			email: props.email || "test@test.com",
+			password: props.password || "11111",
 		}
 	},
 	handleSubmit({ password, email }, formikBag) {
 		setTimeout(() => {
-			if (password === "1" && email === "1") {
+			if (password === "11111" && email === "test@test.com") {
 				formikBag.setStatus({ auth: "test-token" });
 				formikBag.resetForm();
 			} else {
@@ -67,10 +67,10 @@ const LoginForm = withFormik({
 			formikBag.setSubmitting(false);
 		}, 1000)
 	},
-	// validationSchema: Yup.object().shape({
-	// 	email: Yup.string().email().required("Email is required"),
-	// 	password: Yup.string().min(5, "Must be more then 5 characters").required("Password is required")
-	// })
+	validationSchema: Yup.object().shape({
+		email: Yup.string().email().required("Email is required"),
+		password: Yup.string().min(5, "Must be more then 5 characters").required("Password is required")
+	})
 })(LoginFormComponent);
 
 export default WithStorage(LoginForm);

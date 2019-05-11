@@ -6,7 +6,6 @@ const initialState = {
 const currentUser = (state = initialState, action) => {
 	switch (action.type) {
 		case "USER_LOGIN":
-			console.log("logUser");
 			return {
 				...state,
 				isLogged: true
