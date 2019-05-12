@@ -60,7 +60,6 @@ const LoginForm = withFormik({
 		setTimeout(() => {
 			if (password === "11111" && email === "test@test.com") {
 				formikBag.setStatus({ auth: "test-token" });
-				formikBag.resetForm();
 			} else {
 				formikBag.setErrors({ password: "Неверный логин или пароль" });
 			}
