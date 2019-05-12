@@ -5,8 +5,13 @@ import * as Yup from "yup";
 import WithStorage from "../hoc/WithStorage";
 import { Redirect } from "react-router-dom";
 
+const Message = (props) => {
+	return 	<div style={{color: "red"}}>{props.children}</div>;
+};
+
+
 const LoginFormComponent = (props) => {
-	const { values, status, errors, handleChange, handleSubmit, isSubmitting, storage } = props;
+	const { values, status, touched, errors, handleChange, handleSubmit, isSubmitting, storage } = props;
 	const submitDisabled = (values.email === "" || values.password === "" || isSubmitting);
 
 	if (status && status.auth) {
@@ -20,22 +25,22 @@ const LoginFormComponent = (props) => {
 				<Form onSubmit={handleSubmit} loading={isSubmitting} error>
 					<Form.Group grouped>
 						<Form.Input
-							error={errors.email !== undefined && errors.email !== ""}
+							error={errors.email !== undefined && errors.email !== "" && touched.email}
 							name="email"
 							placeholder="email"
 							onChange={handleChange}
 							value={values.email} />
-						<ErrorMessage name="email" render={msg => <div style={{color: "red"}}>{msg}</div>}/>
+						<ErrorMessage name="email" component={Message} />
 					</Form.Group>
 					<Form.Group grouped>
 						<Form.Input
-							error={errors.password !== undefined && errors.password !== ""}
+							error={errors.password !== undefined && errors.password !== "" && touched.password}
 							type="password"
 							name="password"
 							placeholder="password"
 							onChange={handleChange}
 							value={values.password} />
-						<ErrorMessage name="password" render={msg => <div style={{color: "red"}}>{msg}</div>}/>
+						<ErrorMessage name="password" component={Message} />
 					</Form.Group>
 					<Form.Button
 						primary
@@ -52,8 +57,8 @@ const LoginFormComponent = (props) => {
 const LoginForm = withFormik({
 	mapPropsToValues(props) {
 		return {
-			email: props.email || "test@test.com",
-			password: props.password || "11111",
+			email: props.email || "",
+			password: props.password || "",
 		}
 	},
 	handleSubmit({ password, email }, formikBag) {
@@ -67,8 +72,8 @@ const LoginForm = withFormik({
 		}, 1000)
 	},
 	validationSchema: Yup.object().shape({
-		email: Yup.string().email().required("Email is required"),
-		password: Yup.string().min(5, "Must be more then 5 characters").required("Password is required")
+		email: Yup.string().email("Неверный формат email").required("Необходимо ввести email"),
+		password: Yup.string().min(5, "Пароль должен быть не менее 5 символов").required("Необходимо ввести пароль")
 	})
 })(LoginFormComponent);
 
