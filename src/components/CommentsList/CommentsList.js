@@ -29,7 +29,6 @@ class CommentsList extends React.Component {
 	};
 
 	render() {
-		console.log(1000);
 		const { loading, commentsOnPage, page, totalPages, error } = this.props;
 
 		if (loading) {
