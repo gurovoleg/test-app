@@ -4,6 +4,8 @@ import { Card, Form } from "semantic-ui-react";
 import * as Yup from "yup";
 import WithStorage from "../hoc/WithStorage";
 import { Redirect } from "react-router-dom";
+import { showLoading, resetLoading } from 'react-redux-loading-bar'
+import { connect } from "react-redux";
 
 const Message = (props) => {
 	return 	<div style={{color: "red"}}>{props.children}</div>;
@@ -11,8 +13,11 @@ const Message = (props) => {
 
 
 const LoginFormComponent = (props) => {
-	const { values, status, touched, errors, handleChange, handleSubmit, isSubmitting, storage } = props;
+	const { values, status, touched, errors, handleChange, handleSubmit, isSubmitting, storage, showLoading, resetLoading } = props;
 	const submitDisabled = (values.email === "" || values.password === "" || isSubmitting);
+
+	//loading-bar
+	isSubmitting ? showLoading() : resetLoading();
 
 	if (status && status.auth) {
 		storage.setItem("auth", { token: status.auth });
@@ -77,4 +82,9 @@ const LoginForm = withFormik({
 	})
 })(LoginFormComponent);
 
-export default WithStorage(LoginForm);
+const mapDispatchToProps = {
+	showLoading,
+	resetLoading
+};
+
+export default WithStorage(connect(null, mapDispatchToProps)(LoginForm));
