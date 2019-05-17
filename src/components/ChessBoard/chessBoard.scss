@@ -1,0 +1,30 @@
+.chess-board {
+  display: inline-block;
+  border: 2px solid black;
+}
+
+.square {
+  width: 40px;
+  height: 40px;
+}
+
+.square--white {
+  background-color: white;
+}
+
+.square--black {
+  background-color: black;
+}
+
+.square--selected {
+  background: darkred;
+}
+
+.square--target {
+  background: seagreen;
+}
+
+
+.row-flex {
+  display: flex;
+}

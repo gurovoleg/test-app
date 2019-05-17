@@ -3,6 +3,7 @@ import { Container } from "semantic-ui-react";
 import Header from "../Header/Header";
 import UpButton from "../UpButton/UpButton";
 import "./layout.css";
+import NotificationBar from "../NotificationBar/NotificationBar";
 
 class BaseLayout extends React.Component {
 	state = {
@@ -35,6 +36,7 @@ class BaseLayout extends React.Component {
 		const { headerFixed, headerHeight } = this.state;
 		return (
 			<Fragment>
+				<NotificationBar />
 				<Header ref={(element) => this.header = element} isFixed={headerFixed} />
 				<UpButton />
 				<Container className="main-container" style={{paddingTop: headerHeight}}>

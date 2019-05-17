@@ -7,6 +7,7 @@ import About from "../../pages/About";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
 import Logout from "../../pages/Logout";
+import Chess from "../../pages/Chess";
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 					<Redirect exact from="/comments" to="/comments/1" />
 					<Route exact path="/" component={Home} />
 					<Route path="/about" component={About} />
+					<Route path="/chess" component={Chess} />
 					<Route path="/login" component={Login} />
 					<Route path="/logout" component={Logout} />
 					<Route path="/comments/:page(\d+)" component={Comments} />

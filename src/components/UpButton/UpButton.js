@@ -9,15 +9,15 @@ class UpButton extends React.Component {
 	};
 
 	componentDidMount() {
-		window.addEventListener("scroll", this.changeState);
+		window.addEventListener("scroll", this.handleScroll);
 
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener("scroll", this.changeState);
+		window.removeEventListener("scroll", this.handleScroll);
 	}
 
-	changeState = () => {
+	handleScroll = () => {
 		this.setState({ visible: window.pageYOffset > this.state.offset });
 	};
 

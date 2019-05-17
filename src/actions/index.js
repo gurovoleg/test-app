@@ -7,3 +7,14 @@ export const changePage = (page) => ({ type: "CHANGE_COMMENTS_PAGE", payload: pa
 // CurrentUser
 export const logIn = () => ({ type: "USER_LOGIN" });
 export const logOut = () => ({ type: "USER_LOGOUT" });
+
+// NotificationBar
+export const showNotification = (success, header, message) => ({
+	type: "SHOW_NOTIFICATION",
+	payload: {
+		status: success,
+		header,
+		message
+	}
+});
+export const hideNotification = (delay) => ({ type: "HIDE_NOTIFICATION", payload: delay });

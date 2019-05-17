@@ -2,6 +2,7 @@ import React from 'react';
 import { Menu, Container, Input } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import * as actions from "../../actions";
 
 class NavMenu extends React.Component {
 	state = { activeItem: "Home" };
@@ -9,7 +10,10 @@ class NavMenu extends React.Component {
 	handleItemClick = (e, { name }) => {
 		this.props.history.push({
 			pathname: `/${name}`
-		})
+		});
+		setTimeout(() => {
+			this.props.showNotification("info", "Переход", "Вы перешли на вкладку " + name );
+		}, 0);
 	};
 
 	render() {
@@ -27,6 +31,11 @@ class NavMenu extends React.Component {
 					<Menu.Item
 						name='about'
 						active={activeItem === 'about'}
+						onClick={this.handleItemClick}
+					/>
+					<Menu.Item
+						name='chess'
+						active={activeItem === 'chess'}
 						onClick={this.handleItemClick}
 					/>
 					<Menu.Menu position="right">
@@ -49,4 +58,4 @@ const mapStateToProps = ({ currentUser }) => ({
 	isLogged: currentUser.isLogged,
 });
 
-export default withRouter(connect(mapStateToProps)(NavMenu));
+export default withRouter(connect(mapStateToProps, actions)(NavMenu));

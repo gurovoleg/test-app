@@ -84,7 +84,7 @@ const LoginForm = withFormik({
 
 const mapDispatchToProps = {
 	showLoading,
-	resetLoading
+	resetLoading,
 };
 
 export default WithStorage(connect(null, mapDispatchToProps)(LoginForm));

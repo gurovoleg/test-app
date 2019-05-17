@@ -1,0 +1,36 @@
+.notification-bar {
+  position: fixed;
+  z-index: 200;
+  width: 50%;
+  top: 0;
+  left: 50%;
+  transition: all 0.25s;
+  border-radius: 4px;
+  //box-shadow: 0 5px 15px 1px rgba(0,0,0, 0.1);
+  transform: translate(-50%, -110%);
+}
+
+.notification-bar--show {
+  transform: translate(-50%, 20px);
+}
+
+.notification-bar--bottom {
+  top: auto;
+  bottom: 20px;
+}
+
+.notification-bar--left, .notification-bar--right {
+  width: 25%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.notification-bar--left {
+  right: auto;
+  left: 20px;
+}
+
+.notification-bar--right {
+  left: auto;
+  right: 20px;
+}
