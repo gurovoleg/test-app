@@ -1,14 +1,24 @@
 import React from 'react';
 import { Table } from "semantic-ui-react";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 
-const DataTableHeader = ({ columns, colSpan, textAlign }) => {
-	const cells = columns.map(name => (
+const DataTableHeader = ({ columns, colSpan, textAlign, sortDataOnPage, sortColumn, direction }) => {
+
+	const handleOnClick = (column) => {
+		if (column.value !== "") {
+			sortDataOnPage(column.name)
+		}
+	};
+
+	const cells = columns.map(column => (
 		<Table.HeaderCell
-			key={name}
+			sorted={column.name === sortColumn ? direction : null}
+			key={column.value}
 			colSpan={colSpan}
 			textAlign={textAlign}
-			onClick={() => console.log("Column " + name)}>
-			{name}
+			onClick={() => handleOnClick(column)}>
+			{column.value}
 		</Table.HeaderCell>
 	));
 	return (
@@ -25,4 +35,4 @@ DataTableHeader.defaultProps = {
 	colSpan: 0
 };
 
-export default DataTableHeader;
+export default connect(null, actions)(DataTableHeader);

@@ -1,6 +1,8 @@
 const initialState = {
 	allComments: [],
 	commentsOnPage: [],
+	sortColumn: null,
+	sortDirection: null,
 	page: 0,
 	totalPages: 0,
 	recordsLimit: 10,
@@ -9,7 +11,7 @@ const initialState = {
 };
 
 const commentsList = (state = initialState, action) => {
-	const { allComments, page, recordsLimit } = state;
+	const { allComments, commentsOnPage, page, recordsLimit, sortDirection, sortColumn } = state;
 
 	switch (action.type) {
 		case "FETCH_COMMENTS_REQUEST":
@@ -40,7 +42,14 @@ const commentsList = (state = initialState, action) => {
 			return {
 				...state,
 				page: action.payload - 1,
-				commentsOnPage: getPageData(allComments, action.payload - 1, recordsLimit)
+				commentsOnPage: sortData(getPageData(allComments, action.payload - 1, recordsLimit), null, sortDirection, sortColumn )
+			};
+		case "SORT_COMMENTS_ONPAGE":
+			return {
+				...state,
+				sortColumn: action.payload,
+				commentsOnPage: sortData(commentsOnPage, action.payload, sortDirection, sortColumn ),
+				sortDirection: changeSortDirection(sortDirection, sortColumn, action.payload),
 			};
 		default:
 			return state;
@@ -52,5 +61,25 @@ const getPageData = (data, page, recordsLimit) => {
 	return data.slice(page*recordsLimit, (page + 1)*recordsLimit)
 };
 
+//Сортировка данных
+const sortData = (data = [], clickedColumn, sortDirection, sortColumn) => {
+	sortDirection = changeSortDirection(sortDirection, sortColumn, clickedColumn);
+	const column = clickedColumn === null ? sortColumn : clickedColumn;
+	data.sort((a,b) => {
+		const result = sortDirection === "ascending" ? 1 : -1;
+		return a[column] >= b[column] ? result : -result;
+	});
+
+	return [...data];
+};
+
+const changeSortDirection = (sortDirection, sortColumn, clickedColumn) => {
+	if (clickedColumn === null) {
+		return sortDirection
+	} else 	if (clickedColumn === sortColumn) {
+		return sortDirection === "ascending" ? "descending" : "ascending";
+	}
+	return "ascending";
+};
 
 export default commentsList;

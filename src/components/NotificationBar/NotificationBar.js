@@ -5,13 +5,12 @@ import { connect } from "react-redux";
 import * as actions from "../../actions";
 
 class NotificationBar extends React.Component {
-
 	componentDidMount() {
 		// this.closeNotification(this.props.delay);
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.visible !== prevProps.visible) {
+		if (this.props.visible && this.props.visible !== prevProps.visible) {
 			this.closeNotification(this.props.delay);
 		}
 	}

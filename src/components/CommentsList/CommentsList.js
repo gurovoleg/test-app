@@ -8,7 +8,27 @@ import Spinner from "../Spinner/Spinner";
 import { withRouter } from "react-router-dom";
 import CurrentUser from "../CurrentUser/CurrentUser";
 
-const columns = ["Id", "Name", "Email", "Comment", "PostId", ""];
+const columns = [
+	{
+		name: "id",
+		value: "Id" },
+	{
+		name: "name",
+		value: "Name" },
+	{
+		name: "email",
+		value: "Email" },
+	{
+		name: "body",
+		value: "Comment" },
+	{
+		name: "postId",
+		value: "PostId" },
+	{
+		name: "checkbox",
+		value: ""
+	}
+];
 
 class CommentsList extends React.Component {
 
@@ -29,8 +49,7 @@ class CommentsList extends React.Component {
 	};
 
 	render() {
-		const { loading, commentsOnPage, page, totalPages, error } = this.props;
-
+		const { loading, commentsOnPage, page, totalPages, error, sortDirection, sortColumn } = this.props;
 		if (loading) {
 			return <Spinner />
 		}
@@ -42,8 +61,8 @@ class CommentsList extends React.Component {
 			<CurrentUser>
 				{() => {
 					return (
-						<Table celled id="tableId">
-							<DataTableHeader columns={columns} />
+						<Table sortable celled id="tableId">
+							<DataTableHeader columns={columns} sortColumn={sortColumn} direction={sortDirection} />
 							<DataTableBody data={commentsOnPage} />
 							<Table.Footer>
 								<Table.Row>
@@ -63,12 +82,14 @@ class CommentsList extends React.Component {
 	}
 }
 
-const mapStateToProps = ({ commentsList: { commentsOnPage, page, totalPages, recordsLimit, loading } }) => ({
+const mapStateToProps = ({ commentsList: { commentsOnPage, page, totalPages, recordsLimit, loading, sortColumn, sortDirection } }) => ({
 	commentsOnPage,
 	page,
 	totalPages,
 	recordsLimit,
-	loading
+	loading,
+	sortColumn,
+	sortDirection
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {

@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import "./chessBoard.scss";
 
-const ChessBoard = ({ rowsNumber, colsNumber }) => {
+const ChessBoard = ({ rowsNumber = 8, colsNumber = 8 }) => {
 	const [data, setData] = useState(null);
 	useEffect(() => {
 		setData(createBoardData(rowsNumber, colsNumber));
-	}, []);
+	}, [rowsNumber, colsNumber]);
 
 	const [activeId, setActive] = useState(null);
 	const [targetItems, setTargetItems] = useState(null);
 	const handleSetActive = (id) => {
 		setActive(id);
-		setTargetItems(findTargetSquares(id));
+		setTargetItems(findTargetSquares(id, rowsNumber, colsNumber));
 	};
 
 	let squares = null;
 	if (data) {
 		const activeItems = { activeId, targetItems };
-		console.log(activeItems);
 		squares = data.map((row, idx) => (
 			<Row key={idx} data={row} activeItems={activeItems} setActive={handleSetActive}/>)
 		)
@@ -78,7 +77,7 @@ const createBoardData = (rows = 8, cols = 8) => {
 	return chessBoardData;
 };
 
-const findTargetSquares = (id) => {
+const findTargetSquares = (id, rows, cols) => {
 	const row = +id.substr(0,1);
 	const col = +id.substr(1,1);
 	let result = [];
@@ -89,7 +88,7 @@ const findTargetSquares = (id) => {
 		for(let j = -2; j <= 2; j++) {
 			if (j === 0 || Math.abs(i + j) % 2 === 0) continue;
 			const newCol = col + j;
-			if (newCol > 0 && newCol < 9 && newRow > 0 && newRow < 9) {
+			if (newCol > 0 && newCol <= cols && newRow > 0 && newRow <= rows) {
 				result.push("" + newRow + newCol);
 			}
 		}
